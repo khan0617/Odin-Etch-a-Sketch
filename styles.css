@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: aliceblue;
+}
+
+h1{
+    margin: auto;
+    text-align: center;
+    font-size: 48px;
+    margin-bottom: 70px;
+}
+
+.container {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+/* Styling for the actual grid of divs used for the etch-a-sketc */
+.gridContainer{
+    height: 750px;
+    width: 750px;
+    background-color: white;
+    margin: none;
+    padding: none;
+    /* display: grid; */
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+/* Styling for the control buttons to the left of the sketch */
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: center;
+    font-size: 20px;
+    gap: 20px;
+}
+
+#clearBtn {
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.controls > button, input {
+    width: 75px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.slider {
+    width: 200px;
+}
+
+.gridSize {
+    margin-top: -5px;
+    margin-left: 30%;
+}
+
+
+/* styling for each small square in the grid */
+.gridDiv {
+    border: 1px solid black;
+}
