@@ -6,6 +6,13 @@ let sketchHeight;
 let hoverColor = 'black';
 
 
+// determines if we need to erase the squares or not on hover.
+let eraseMode = false;
+
+function updateEraseMode(){
+    eraseMode = !eraseMode;
+}
+
 // when the window is resized, make sure the grid adjusts accordingly
 window.addEventListener('resize', () => {
     initHeightAndWidth();
@@ -67,7 +74,12 @@ function createGridBoxes(){
 
 // event handler for mouseover on any of the divs in the grid.
 function hoverHandler(event){
-    event.target.style.backgroundColor = hoverColor;
+    if(eraseMode){
+        event.target.style.backgroundColor = null;
+    }
+    else{
+        event.target.style.backgroundColor = hoverColor;
+    }
 }
 
 // function that resets the grid to zero, removing all drawn stuff from the sketch window
@@ -133,5 +145,7 @@ function updateGridSize(value, clear = true){
     }
 }
 
+
+// start the program and start the grid
 initHeightAndWidth();
 createGridBoxes();
