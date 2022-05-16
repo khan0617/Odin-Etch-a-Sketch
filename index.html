@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etch-a-Sketch</title>
     <link rel="stylesheet" href="./styles.css">
+    <link href='https://fonts.googleapis.com/css?family=Kalam' rel='stylesheet'>
     <script defer src="./etchScript.js"></script>
 </head>
 <body>
@@ -15,6 +16,12 @@
             <div class="clearContainer">
                 <label for="clearBtn">Clear the Sketch&nbsp;</label>
                 <button type="button" id="clearBtn" onclick="clearGrid()">Clear</button>
+            </div>
+
+            <div class="colorContainer">
+                <label for="colorPicker">Color Picker &nbsp;</label>
+                <input type="color" name="colorPicker" id="colorPicker"
+                    onchange="updateColorValue(this.value)">
             </div>
             
 
@@ -27,12 +34,25 @@
                     <span class="slider round"></span>
                 </label>
             </div>
-            
 
-            <div class="colorContainer">
-                <label for="colorPicker">Color Picker &nbsp;</label>
-                <input type="color" name="colorPicker" id="colorPicker"
-                    onchange="updateColorValue(this.value)">
+            <div class="darkeningContainer">
+                <label for="darkeningBtn">Toggle Incremental Darkening Mode</label>
+
+                <!-- Rounded switch -->
+                <label class="switch">
+                    <input name="darkeningSwitch" type="checkbox" onchange="updateDarkeningMode()">
+                    <span class="slider dark round"></span>
+                </label>
+            </div>
+
+            <div class="gridLinesContainer">
+                <label for="gridBtn">Show Grid Lines&nbsp;</label>
+
+                <!-- Rounded switch -->
+                <label class="switch">
+                    <input name="gridLineSwitch" type="checkbox" onchange="updateGridLines()" checked>
+                    <span class="slider grid round"></span>
+                </label>
             </div>
             
             <div class="sliderContainer">
@@ -46,6 +66,7 @@
                 </datalist>
                 <p class="gridSize">50x50</p>
             </div>
+            
         </div>
         <div class="gridContainer"></div>
     </div>

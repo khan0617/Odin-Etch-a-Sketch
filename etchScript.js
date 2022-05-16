@@ -5,12 +5,39 @@ let sketchHeight;
 // global variable storing the color being drawn on the sketch
 let hoverColor = 'black';
 
+// determines if we want incremental darkening mode
+// basically, if we hover of the same square multiple times, it should become dark until it's black.
+let darkeningMode = false;
 
 // determines if we need to erase the squares or not on hover.
 let eraseMode = false;
 
+
+// determines if each div needs to have its border drawn or not
+let drawGridLines = true;
+
+function updateGridLines(){
+    drawGridLines = !drawGridLines;
+    let squares = document.querySelectorAll('.gridDiv');
+    squares.forEach(element => {
+        if(drawGridLines){
+            element.style.border = '1px solid black';;
+        }
+        else{
+            element.style.border = '0';
+        }
+    });
+}
+
 function updateEraseMode(){
     eraseMode = !eraseMode;
+}
+
+function updateDarkeningMode(){
+    darkeningMode = !darkeningMode;
+    if(darkeningMode){
+        clearGrid();
+    }
 }
 
 // when the window is resized, make sure the grid adjusts accordingly
@@ -31,6 +58,22 @@ function initHeightAndWidth(){
 
     // DEBUGGING:
     console.log(`grid width: ${sketchWidth}, grid height: ${sketchHeight}`);
+    // let rgbval = window.getComputedStyle( document.body ,null).getPropertyValue('background-color');
+    // let hexval = convertRGBToHex(rgbval);
+    // console.log(`for body: hex val: ${hexval}, rgbval: ${rgbval}`);
+}
+
+
+// function from stackoverflow to convert an rgb(x, y, z) value to a 'FFFFFF' string
+// to use this to set a background color, add a "#" at the start first!
+function convertRGBToHex(rgbVal) {
+    var parts = rgbVal.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    delete (parts[0]);
+    for (var i = 1; i <= 3; ++i) {
+        parts[i] = parseInt(parts[i]).toString(16);
+        if (parts[i].length == 1) parts[i] = '0' + parts[i];
+    }
+    return parts.join('').toUpperCase();
 }
 
 // Function that's called whenever the slider is changed. 
@@ -62,6 +105,12 @@ function createGridBoxes(){
             newDiv.style.width = boxWidth + "px";
             newDiv.style.height = boxHeight + "px";
             newDiv.classList.add('gridDiv');
+            if(drawGridLines){
+                newDiv.style.border = '1px solid black';
+            }
+            else{
+                newDiv.style.border = '0';
+            }
 
             // add hover listeners to change this div's color on mouseover
             newDiv.addEventListener('mouseover', hoverHandler);
@@ -78,7 +127,36 @@ function hoverHandler(event){
         event.target.style.backgroundColor = null;
     }
     else{
-        event.target.style.backgroundColor = hoverColor;
+        if(darkeningMode){
+            let col = window.getComputedStyle(event.target ,null).getPropertyValue('background-color'); // read the background color of the square currently
+            console.log(`col: ${col}`);
+            // the section below works by changing the black level of each square incrementally.
+            // We start at #c8c8c8 (or rgb(200, 200, 200) and decrease by 50 rgb values every time)
+            // this can be achieved by subtracing #323232 from the hex value until we hit 0x0
+            if(col == '' || col == undefined || col == 'rgba(0, 0, 0, 0)'){
+                col = '#c8c8c8';
+                event.target.style.backgroundColor = col;
+            }
+            else{
+                let hexCol = convertRGBToHex(col);
+                hexCol = Number("0x" + hexCol);
+                hexCol -= 0x323232;
+                hexCol = Math.max(0x0, hexCol);
+
+                // make sure hexCol is a 6 digit hex number with a #
+                if(hexCol == 0){
+                    hexCol = "#000000";
+                }
+                else{
+                    hexCol = "#" + hexCol.toString(16);
+                }
+                event.target.style.backgroundColor = hexCol;
+            }
+        }
+        else{
+            event.target.style.backgroundColor = hoverColor;
+        }
+        
     }
 }
 
@@ -139,6 +217,12 @@ function updateGridSize(value, clear = true){
                 newDiv.style.height = boxHeight + "px";
                 newDiv.classList.add('gridDiv');
                 newDiv.addEventListener('mouseover', hoverHandler);
+                if(drawGridLines){
+                    newDiv.style.border = '1px solid black';
+                }
+                else{
+                    newDiv.style.border = '0';
+                }
                 gridContainer.appendChild(newDiv);
             }
         }
