@@ -12,17 +12,34 @@
     <h1>Etch-a-Sketch</h1>
     <div class="container">
         <div class="controls">
-            <button type="button" id="clearBtn" onclick="clearGrid()">Clear</button>
+            <div class="clearContainer">
+                <label for="clearBtn">Clear the Sketch&nbsp;</label>
+                <button type="button" id="clearBtn" onclick="clearGrid()">Clear</button>
+            </div>
+            
+
+            <div class="eraseContainer">
+                <label for="eraseBtn">Toggle Erase Mode&nbsp;</label>
+
+                <!-- Rounded switch -->
+                <label class="switch">
+                    <input name="eraseSwitch" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <!-- <button name='eraseBtn' type="button" id="eraseBtn" onclick="toggleEraseMode()">Erase</button> -->
+            </div>
+            
 
             <div class="colorContainer">
                 <label for="colorPicker">Color Picker &nbsp;</label>
-                <input type="color" name="colorPicker" id="colorPicker">
+                <input type="color" name="colorPicker" id="colorPicker"
+                    onchange="updateColorValue(this.value)">
             </div>
             
             <div class="sliderContainer">
                 <label for="slider">Grid Size &nbsp;</label>
-                <input class="slider" name="slider" value="50" type="range" list="steplist" step="25"
-                    oninput="updateSliderValue(this.value)">
+                <input class="colorSlider" name="slider" value="50" type="range" list="steplist" step="25"
+                    oninput="updateSliderValue(this.value)" min="25" max="75">
                 <datalist id="steplist">
                     <option>25</option>
                     <option>50</option>
@@ -30,8 +47,6 @@
                 </datalist>
                 <p class="gridSize">50x50</p>
             </div>
-            
-            
         </div>
         <div class="gridContainer"></div>
     </div>
