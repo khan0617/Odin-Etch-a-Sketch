@@ -47,20 +47,13 @@ window.addEventListener('resize', () => {
 })
 
 function initHeightAndWidth(){
-    let gridContainer = document.getElementsByClassName('gridContainer')[0];
-    sketchWidth = gridContainer.offsetWidth;
-    sketchHeight = gridContainer.offsetHeight;
+    let gridContainer = document.querySelector('.gridContainer');
 
-    // weird thing on chrome, width is zero sometimes
-    if(sketchWidth == 0){
-        sketchWidth = sketchHeight;
-    }
+    sketchWidth = Math.max(parseInt(gridContainer.style.width), gridContainer.offsetWidth);
+    sketchHeight = Math.max(parseInt(gridContainer.style.height), gridContainer.offsetHeight);
 
     // DEBUGGING:
     console.log(`grid width: ${sketchWidth}, grid height: ${sketchHeight}`);
-    // let rgbval = window.getComputedStyle( document.body ,null).getPropertyValue('background-color');
-    // let hexval = convertRGBToHex(rgbval);
-    // console.log(`for body: hex val: ${hexval}, rgbval: ${rgbval}`);
 }
 
 

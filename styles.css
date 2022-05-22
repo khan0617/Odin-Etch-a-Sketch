@@ -3,6 +3,7 @@
 }
 
 body {
+  max-height: 100vh;
     background-color: aliceblue;
     font-family: 'Kalam', sans-serif;
 }
@@ -10,8 +11,8 @@ body {
 h1{
     margin: auto;
     text-align: center;
-    font-size: 48px;
-    margin-bottom: 70px;
+    font-size: 42px;
+    /* margin-bottom: 70px; */
 }
 
 .container {
@@ -23,11 +24,10 @@ h1{
 
 /* Styling for the actual grid of divs used for the etch-a-sketc */
 .gridContainer{
-    height: 750px;
-    width: 750px;
     background-color: white;
     margin: none;
     padding: none;
+    padding-bottom: 50px;
     display: flex;
     flex-wrap: wrap;
 }
